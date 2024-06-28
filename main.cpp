@@ -6,6 +6,8 @@
 #include <vector>
 #include <variant>
 #include <exception>
+#include <cctype>
+#include <algorithm>
 
 using MultiType = std::variant<int, std::string, double>;
 
@@ -17,6 +19,12 @@ private:
     std::string filename_;
     filestruct fstruct_;
     //public:
+    std::string eraseWS(const std::string& s){
+        std::string res = s;
+        res.erase(std::remove_if(res.begin(), res.end(), ::isspace),
+                res.end());
+        return res;
+    }
     void split_in_two(const std::string& s, std::string& before, std::string& after, const char& del)
     {
         std::stringstream ss(s);
@@ -44,10 +52,10 @@ private:
         int count = 1;
         while(getline(infile,line)){
             split_in_two(line,before,after,';');
-            if(!before.empty()){
+            if(!eraseWS(before).empty()){
                 line = before;
                 split_in_two(line,before,after,'[');
-                if(before.empty()){
+                if(eraseWS(before).empty()){
                     line = after;
                     split_in_two(line,before,after,']');
                     if(line != before){ //']' HAS BEEN FOUND
