@@ -167,13 +167,13 @@ public:
 int main(){
     try{
         ini_parser parser("file.ini");
-        //auto value = parser.get_value<double>("Section1.var1");
+        auto value = parser.get_value<double>("Section1.var1");
         //  WRONG SECTION NAME
         //auto value = parser.get_value<double>("Section10.var1");
         //  WRONG VALUE NAME
         //auto value = parser.get_value<double>("Section1.var10");
         //  WRONG TYPE
-        auto value = parser.get_value<std::string>("Section1.var1");
+        //auto value = parser.get_value<std::string>("Section1.var1");
         std::cout << "Value requested is " << value << "\n";
     }catch(const char* e){
         std::cout << e;
